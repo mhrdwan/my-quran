@@ -1,95 +1,81 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { headers } from "next/headers";
+import { ReactNode } from "react";
+import SideBar from "./component/sideBar/page";
+import SidebarBawah from "./component/sideBar/sidebarBawah.tsx/page";
+import CardMenuAwal from "./component/card/cardMenuAwal/page";
+import { Col, Row } from "antd";
+import "./globals.css";
 
-export default function Home() {
+
+interface HomeProps {
+  children: ReactNode;
+}
+
+
+
+export default function Home({ children }: HomeProps) {
+  const cardCount = Array.from({ length: 32 }, (_, index) => index + 1);
+  const headersList = headers();
+  const pathname = headersList.get("x-invoke-path") || "/";
+  console.log("ini route:", pathname);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <div
+        style={{
+          backgroundColor: "#334155",
+          display: "flex",
+          zIndex: 1,
+          position: "fixed",
+          width: "100%",
+        }}
+        className="iniSidebar"
+      >
+        <SideBar />
+        <div className="sidebarBawah">
+          <SidebarBawah />
+        </div>
+        <div style={{ padding: 30, width: "100%" }}>
+          {/* <ClientInput /> */}
+          <div
+            style={{
+              backgroundColor: "#334155",
+              padding: "10px",
+              marginTop: 20,
+              width: "100%",
+              height: "100vh",
+              overflow: "scroll",
+            }}
+            className="scroll-container"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            {pathname === "/" && (
+              <>
+                {children}
+                <div className="hp">
+                  {cardCount.map((_, index) => (
+                    <Col key={index} style={{ marginTop: 20 }}>
+                      <CardMenuAwal />
+                    </Col>
+                  ))}
+                </div>
+                <Row gutter={[16, 16]} style={{ backgroundColor: "" }}>
+                  {cardCount.map((_, index) => (
+                    <Col
+                      key={index}
+                      md={12}
+                      sm={24}
+                      xl={6}
+                      style={{ marginTop: 20 }}
+                    >
+                      <CardMenuAwal />
+                    </Col>
+                  ))}
+                </Row>
+              </>
+            )}
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }

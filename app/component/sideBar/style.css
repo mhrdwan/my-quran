@@ -1,0 +1,8 @@
+.lucide {
+    margin-top: 50px;
+}
+
+.lucide:hover {
+    color: #34d399;
+    cursor: pointer;
+}

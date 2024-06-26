@@ -78,6 +78,15 @@
   padding: 0;
   margin: 0;
 }
+/* App.css */
+
+.scroll-container {
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* WebKit browsers */
+}
 
 html,
 body {
@@ -104,4 +113,34 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+@media (max-width: 1199px) {
+  .sidebar {
+    display: none;
+  }
+  .sidebarBawah {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #1f2937;
+    bottom: 0; 
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+}
+@media (min-width : 1200px) {
+  .sidebarBawah {
+    display: none;
+  }
+}
+
+@media (min-width : 720px) {
+  .hp{
+    display: none;
+  }
+  
 }
